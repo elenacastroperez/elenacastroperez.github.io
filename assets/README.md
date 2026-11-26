@@ -1,0 +1,1 @@
+Place the portfolio cover video here as cover.mp4. The homepage loads it from assets/cover.mp4.
