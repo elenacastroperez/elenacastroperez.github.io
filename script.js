@@ -1,30 +1,33 @@
 const video = document.getElementById("heroVideo");
 
-async function playHeroVideo() {
-  if (!video) return;
-
+if (video) {
   video.muted = true;
+  video.defaultMuted = true;
   video.playsInline = true;
 
-  try {
-    await video.play();
-  } catch (error) {
-    console.log("Autoplay bloqueado:", error);
-  }
+  const startVideo = async () => {
+    try {
+      await video.play();
+    } catch (error) {
+      console.log("Esperando reproducción:", error);
+    }
+  };
+
+  video.addEventListener("loadeddata", startVideo);
+  video.addEventListener("canplay", startVideo);
+
+  window.addEventListener("load", startVideo);
+  window.addEventListener("pageshow", startVideo);
+
+  video.load();
 }
 
-window.addEventListener("load", playHeroVideo);
-window.addEventListener("pageshow", playHeroVideo);
-
-document.addEventListener("visibilitychange", () => {
-  if (!document.hidden && video.paused) {
-    playHeroVideo();
-  }
-});
-
-document.querySelectorAll('a[href^="#"]').forEach((link) => {
+// Navegación suave
+document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener("click", () => {
     const target = document.querySelector(link.getAttribute("href"));
-    if (target) target.scrollIntoView({ behavior: "smooth" });
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
   });
 });
