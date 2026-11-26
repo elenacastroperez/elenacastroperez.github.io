@@ -5,7 +5,7 @@ on:
   push:
     paths:
       - "*.zip"
-      - ".github/workflows/prepare-recato.yml"
+      - ".github/workflows/prepare-recato.yml"\n      - "script.js"
 
 permissions:
   contents: write
